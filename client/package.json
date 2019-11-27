@@ -1,0 +1,29 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "build-dev": "webpack -d --mode development --watch",
+    "build-prod": "webpack -p --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "@babel/preset-react": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "eslint": "^6.5.1",
+    "css-loader": "^3.2.0",
+    "style-loader": "^0.23.1"
+  }
+}
