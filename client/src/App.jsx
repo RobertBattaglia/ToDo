@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Todo from './components/Todo/Todo';
+import List from './components/List/List';
 
 const App = () => (
   <>
     <h2>To Do</h2>
-    <Todo />
+    <List />
   </>
 );
 
