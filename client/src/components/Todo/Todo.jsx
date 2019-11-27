@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './style.css';
+import styles from './Todo.css';
 
 const Todo = () => {
   return (
