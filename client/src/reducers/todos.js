@@ -1,7 +1,7 @@
 const todos = (state = {}, action) => {
   switch (action.type) {
     case 'CREATE_TODO':
-      break;
+      return { ...state, payload: action.payload };
     case 'COMPLETE_TODO':
       break;
     case 'UPDATE_TODO':
