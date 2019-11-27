@@ -1,15 +1,25 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import styles from './Todo.css';
 
-const Todo = () => {
+import { deleteTodo } from '../../actionCreators';
+
+const Todo = ({ task, hash, removeToDo }) => {
+  const handleClick = () => {
+    removeToDo(hash);
+  };
+
   return (
     <div className={styles.todo}>
       <input type="checkbox" />
-      <p>ToDo</p>
-      <button>X</button>
+      <p>{task}</p>
+      <button onClick={handleClick}>X</button>
     </div>
   );
 };
 
-export default Todo;
+const mapDispatchToProps = dispatch => ({
+  removeToDo: hash => dispatch(deleteTodo(hash))
+});
+
+export default connect(null, mapDispatchToProps)(Todo);

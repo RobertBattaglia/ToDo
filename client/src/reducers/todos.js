@@ -6,8 +6,11 @@ const todos = (state = {}, action) => {
       break;
     case 'UPDATE_TODO':
       break;
-    case 'DELETE_TODO':
-      break;
+    case 'DELETE_TODO': {
+      let newState = { ...state };
+      delete newState[[action.payload]];
+      return newState;
+    }
     default:
       return state;
   }

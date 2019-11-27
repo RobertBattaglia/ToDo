@@ -6,8 +6,8 @@ import Todo from '../Todo/Todo';
 const List = ({ todos }) => {
   return (
     <div>
-      {Object.keys(todos).map((_, i) => (
-        <Todo key={i} />
+      {Object.keys(todos).map(key => (
+        <Todo task={todos[key]} hash={key} key={key} />
       ))}
     </div>
   );
