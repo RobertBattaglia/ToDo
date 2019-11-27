@@ -1,11 +1,16 @@
 const todos = (state = {}, action) => {
   switch (action.type) {
     case 'CREATE_TODO':
-      return { ...state, [action.payload.hash]: action.payload.task };
-    case 'COMPLETE_TODO':
-      break;
-    case 'UPDATE_TODO':
-      break;
+      return {
+        ...state,
+        [action.payload.hash]: { task: action.payload.task, complete: false }
+      };
+    case 'COMPLETE_TODO': {
+      const todo = Object.assign({}, state[action.payload]);
+      todo.complete = !todo.complete;
+      return { ...state, [action.payload]: todo };
+    }
+
     case 'DELETE_TODO': {
       let newState = { ...state };
       delete newState[[action.payload]];

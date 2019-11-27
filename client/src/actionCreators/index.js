@@ -8,11 +8,6 @@ export const completeTodo = task => ({
   payload: task
 });
 
-export const updateTodo = (task, updateTask) => ({
-  type: 'UPDATE_TODO',
-  payload: { task, updateTask }
-});
-
 export const deleteTodo = task => ({
   type: 'DELETE_TODO',
   payload: task

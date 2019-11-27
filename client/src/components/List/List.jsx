@@ -7,7 +7,12 @@ const List = ({ todos }) => {
   return (
     <div>
       {Object.keys(todos).map(key => (
-        <Todo task={todos[key]} hash={key} key={key} />
+        <Todo
+          hash={key}
+          task={todos[key].task}
+          complete={todos[key].complete}
+          key={key}
+        />
       ))}
     </div>
   );
