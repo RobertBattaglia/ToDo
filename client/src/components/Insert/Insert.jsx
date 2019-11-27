@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import sha256 from 'crypto-js/sha256';
 
 import { createTodo } from '../../actionCreators';
 
@@ -12,7 +13,7 @@ const Insert = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.insertToDo(task);
+    props.insertToDo({ hash: sha256(task), task });
     setTask('');
   };
 
