@@ -8,7 +8,6 @@ const App = () => {
   return (
     <>
       <Header />
-      <h2>To Do</h2>
       <Insert />
       <List />
     </>
