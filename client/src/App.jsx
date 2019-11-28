@@ -5,17 +5,13 @@ import Insert from './components/Insert/Insert';
 import List from './components/List/List';
 
 const App = () => {
-  const responseFacebook = (err, res) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(res);
-    }
+  const responseFacebook = res => {
+    console.log(res);
   };
   return (
     <>
       <FacebookLogin
-        appId="423407844996823"
+        appId="561942184373005"
         autoLoad={true}
         fields="name,email,picture"
         callback={responseFacebook}
