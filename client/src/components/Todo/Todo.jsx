@@ -6,6 +6,9 @@ import { deleteTodo, completeTodo } from '../../actionCreators';
 
 const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
   const handleClick = () => {
+    const local = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
+    delete local[hash];
+    localStorage.setItem('todos', JSON.stringify(local));
     removeToDo(hash);
   };
 
