@@ -1,3 +1,4 @@
+// Todo
 export const createTodo = task => ({
   type: 'CREATE_TODO',
   payload: task
@@ -11,4 +12,10 @@ export const completeTodo = task => ({
 export const deleteTodo = task => ({
   type: 'DELETE_TODO',
   payload: task
+});
+
+// USER
+export const loginUser = user => ({
+  type: 'LOGIN_USER',
+  payload: user
 });

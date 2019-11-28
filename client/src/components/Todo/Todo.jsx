@@ -7,6 +7,7 @@ import { changeLocalStorage } from '../../helpers';
 
 const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
   const handleClick = () => {
+    console.log(removeToDo);
     changeLocalStorage(todo => delete todo[hash]);
     removeToDo(hash);
   };
