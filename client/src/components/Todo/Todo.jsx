@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 import styles from './Todo.css';
 
 import { deleteTodo, completeTodo } from '../../actionCreators';
+import { changeLocalStorage } from '../../helpers';
 
 const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
   const handleClick = () => {
+    changeLocalStorage(todo => delete todo[hash]);
     removeToDo(hash);
   };
 
   const handleChange = () => {
+    changeLocalStorage(todo => (todo[hash].complete = !todo[hash].complete));
     finishToDo(hash);
   };
 

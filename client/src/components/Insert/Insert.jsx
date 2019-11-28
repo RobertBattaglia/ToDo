@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import sha256 from 'crypto-js/sha256';
 
 import { createTodo } from '../../actionCreators';
+import { changeLocalStorage } from '../../helpers';
 
 const Insert = props => {
   const [task, setTask] = useState('');
@@ -13,7 +14,9 @@ const Insert = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.insertToDo({ hash: sha256(task), task });
+    const hash = sha256(task);
+    changeLocalStorage(todo => (todo[hash] = { task, complete: false }));
+    props.insertToDo({ hash, task });
     setTask('');
   };
 
