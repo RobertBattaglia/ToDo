@@ -1,9 +1,11 @@
 const express = require('express');
 
-const todoRouter = express.Router();
+const router = express.Router();
 
-todoRouter.post('/:hash', async (req, res) => {
+router.post('/:hash', async (req, res) => {
   //TODO
+  console.log('received');
+  console.log(process.env.MONGO_URI);
 });
 
-export default todoRouter;
+module.exports = router;
