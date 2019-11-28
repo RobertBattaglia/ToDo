@@ -3,19 +3,16 @@ import { connect } from 'react-redux';
 import styles from './Todo.css';
 
 import { deleteTodo, completeTodo } from '../../actionCreators';
+import { changeLocalStorage } from '../../helpers';
 
 const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
   const handleClick = () => {
-    const local = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
-    delete local[hash];
-    localStorage.setItem('todos', JSON.stringify(local));
+    changeLocalStorage(todo => delete todo[hash]);
     removeToDo(hash);
   };
 
   const handleChange = () => {
-    const local = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
-    local[hash].complete = !local[hash].complete;
-    localStorage.setItem('todos', JSON.stringify(local));
+    changeLocalStorage(todo => (todo[hash].complete = !todo[hash].complete));
     finishToDo(hash);
   };
 
