@@ -5,7 +5,10 @@ const fs = require('fs');
 
 const app = express();
 
+const todoRoute = require('./routes/todo');
+
 app.use(express.static(path.resolve(__dirname, '..', 'client', 'dist')));
+app.use('/todo', todoRoute);
 
 const port = process.env.PORT || 8080;
 
