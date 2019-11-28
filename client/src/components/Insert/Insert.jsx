@@ -13,7 +13,11 @@ const Insert = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.insertToDo({ hash: sha256(task), task });
+    const hash = sha256(task);
+    const local = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
+    local[hash] = { task, complete: false };
+    localStorage.setItem('todos', JSON.stringify(local));
+    props.insertToDo({ hash, task });
     setTask('');
   };
 

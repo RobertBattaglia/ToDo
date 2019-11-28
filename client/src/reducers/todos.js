@@ -1,4 +1,6 @@
-const todos = (state = {}, action) => {
+const initState = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
+
+const todos = (state = initState, action) => {
   switch (action.type) {
     case 'CREATE_TODO':
       return {
