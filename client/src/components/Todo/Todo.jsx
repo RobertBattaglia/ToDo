@@ -13,6 +13,9 @@ const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
   };
 
   const handleChange = () => {
+    const local = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
+    local[hash].complete = !local[hash].complete;
+    localStorage.setItem('todos', JSON.stringify(local));
     finishToDo(hash);
   };
 
