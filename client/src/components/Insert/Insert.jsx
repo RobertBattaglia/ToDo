@@ -5,7 +5,7 @@ import sha256 from 'crypto-js/sha256';
 import { createTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
 
-const Insert = props => {
+const Insert = ({ insertToDo, user }) => {
   const [task, setTask] = useState('');
 
   const handleChange = e => {
@@ -14,9 +14,9 @@ const Insert = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const hash = sha256(task);
+    const hash = user.isLoggedIn ? sha256(task + user.id) : sha256(task);
     changeLocalStorage(todo => (todo[hash] = { task, complete: false }));
-    props.insertToDo({ hash, task });
+    insertToDo({ hash, task });
     setTask('');
   };
 
@@ -32,8 +32,12 @@ const Insert = props => {
   );
 };
 
+const handleStateToProps = ({ user }) => ({
+  user
+});
+
 const handleDispatchToProps = dispatch => ({
   insertToDo: task => dispatch(createTodo(task))
 });
 
-export default connect(null, handleDispatchToProps)(Insert);
+export default connect(handleStateToProps, handleDispatchToProps)(Insert);

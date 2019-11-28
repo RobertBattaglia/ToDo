@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FacebookLogin from 'react-facebook-login';
+import styles from './Header.css';
 
 import { loginUser } from '../../actionCreators';
 
@@ -10,16 +11,15 @@ const Header = ({ user, login }) => {
   };
 
   return (
-    <div>
-      {Object.keys(user).length ? (
+    <div id={styles.header}>
+      {user.name ? (
         <h2>{`${user.name}'s Todo List`}</h2>
       ) : (
         <>
-          <h2>To Do</h2>
+          <h2>My Todo List</h2>
           <p>login to facebook to access list across devices!</p>
           <FacebookLogin
             appId="561942184373005"
-            autoLoad={true}
             fields="name,email,picture"
             callback={responseFacebook}
             cssClass="my-facebook-button-class"
