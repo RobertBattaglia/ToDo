@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
+// Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -14,6 +15,7 @@ db.once('open', () => {
   console.log('Connected to mongo db...');
 });
 
+// Schemas / Model
 const todoSchema = new mongoose.Schema({
   _id: { type: String, required: true },
   task: String,
@@ -29,6 +31,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('user', userSchema);
 
+// Methods
 module.exports.saveTodo = async (id, name, email, todo) => {
   const user = await User.findOne({ _id: id });
   if (!user) {
@@ -41,9 +44,7 @@ module.exports.saveTodo = async (id, name, email, todo) => {
   } else {
     const todoExists = await user.todos.id(todo._id);
     if (!todoExists) {
-      console.log(user);
       user.todos.push(todo);
-      console.log(user);
       user.save();
     }
   }
@@ -53,8 +54,10 @@ module.exports.getUserTodos = async userId => {
   return await User.findOne({ _id: userId }).select('todos -_id');
 };
 
-module.exports.delete = () => {
-  return User.findOneAndDelete({ _id: '10219071906341489' }).exec();
+module.exports.deleteTodo = async (userId, todoId) => {
+  const user = await User.findOne({ _id: userId }).exec();
+  user.todos = user.todos.filter(todo => todo.id !== todoId);
+  return user.save();
 };
 
 module.exports.findTodo = () => {

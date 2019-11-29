@@ -9,9 +9,10 @@ router.post('/', async (req, res) => {
   const { id, name, email, todo } = req.body;
   try {
     await db.saveTodo(id, name, email, todo);
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (err) {
     console.error(err);
+    res.sendStatus(500);
   }
 });
 
@@ -21,11 +22,19 @@ router.get('/:userId', async (req, res) => {
     res.status(200).send(await db.getUserTodos(userId));
   } catch (err) {
     console.error(err);
+    res.sendStatus(500);
   }
 });
 
-router.delete('/', async (req, res) => {
-  db.delete();
+router.delete('/:userId/:todoId', async (req, res) => {
+  const { userId, todoId } = req.params;
+  try {
+    await db.deleteTodo(userId, todoId);
+    res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;
