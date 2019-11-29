@@ -1,19 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import sha256 from 'crypto-js/sha256';
+import axios from 'axios';
 import styles from './Todo.css';
 
 import { deleteTodo, completeTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
 
-const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
+const Todo = ({ hash, task, complete, user, removeToDo, finishToDo }) => {
+  const deleteTodo = () => {
+    const hash = sha256(task + user.id).toString();
+    axios.delete(`/todo/${user.id}/${hash}`);
+  };
+
+  const setTodoComplete = () => {
+    const hash = sha256(task + user.id).toString();
+    axios.put(`/todo/${user.id}/${hash}`);
+  };
+
   const handleClick = () => {
     changeLocalStorage(todo => delete todo[hash]);
     removeToDo(hash);
+    if (user.isLoggedIn) {
+      deleteTodo();
+    }
   };
 
   const handleChange = () => {
     changeLocalStorage(todo => (todo[hash].complete = !todo[hash].complete));
     finishToDo(hash);
+    if (user.isLoggedIn) {
+      setTodoComplete();
+    }
   };
 
   return (
@@ -29,9 +47,13 @@ const Todo = ({ hash, task, complete, removeToDo, finishToDo }) => {
   );
 };
 
+const mapStateToProps = ({ user }) => ({
+  user
+});
+
 const mapDispatchToProps = dispatch => ({
   removeToDo: hash => dispatch(deleteTodo(hash)),
   finishToDo: hash => dispatch(completeTodo(hash))
 });
 
-export default connect(null, mapDispatchToProps)(Todo);
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

@@ -9,7 +9,7 @@ import { changeLocalStorage } from '../../helpers';
 const Insert = ({ insertTodo, user }) => {
   const [task, setTask] = useState('');
 
-  const submitToDatabase = async () => {
+  const postTodo = async () => {
     const { id, name, email } = user;
     const todo = { id: sha256(task + id).toString(), task, complete: false };
     const body = { id, name, email, todo };
@@ -27,7 +27,7 @@ const Insert = ({ insertTodo, user }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (user.isLoggedIn) {
-      submitToDatabase();
+      postTodo();
     }
     const hash = sha256(task);
     changeLocalStorage(todo => (todo[hash] = { task, complete: false }));

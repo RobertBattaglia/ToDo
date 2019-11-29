@@ -17,7 +17,7 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
       const { task, complete } = todo;
       const hash = sha256(task);
       changeLocalStorage(todo => (todo[hash] = { task, complete }));
-      insertTodo({ hash, task });
+      insertTodo({ hash, task, complete });
     });
   };
 
