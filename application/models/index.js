@@ -60,6 +60,16 @@ module.exports.deleteTodo = async (userId, todoId) => {
   return user.save();
 };
 
-module.exports.findTodo = () => {
-  return User.find();
+module.exports.completeTodo = async (userId, todoId) => {
+  const user = await User.findOne({ _id: userId }).exec();
+  user.todos.forEach(todo => {
+    if (todo.id === todoId) {
+      todo.complete = !todo.complete;
+    }
+  });
+  return user.save();
+};
+
+module.exports.getAll = async () => {
+  return await User.find({}).exec();
 };

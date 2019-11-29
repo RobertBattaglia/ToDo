@@ -37,4 +37,19 @@ router.delete('/:userId/:todoId', async (req, res) => {
   }
 });
 
+router.put('/:userId/:todoId', async (req, res) => {
+  const { userId, todoId } = req.params;
+  try {
+    await db.completeTodo(userId, todoId);
+    res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
+router.get('/', async (req, res) => {
+  res.send(await db.getAll());
+});
+
 module.exports = router;
