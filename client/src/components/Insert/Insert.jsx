@@ -6,7 +6,7 @@ import axios from 'axios';
 import { createTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
 
-const Insert = ({ insertToDo, user }) => {
+const Insert = ({ insertTodo, user }) => {
   const [task, setTask] = useState('');
 
   const submitToDatabase = async () => {
@@ -31,7 +31,7 @@ const Insert = ({ insertToDo, user }) => {
     }
     const hash = sha256(task);
     changeLocalStorage(todo => (todo[hash] = { task, complete: false }));
-    insertToDo({ hash, task });
+    insertTodo({ hash, task, complete: false });
     setTask('');
   };
 
@@ -52,7 +52,7 @@ const handleStateToProps = ({ user }) => ({
 });
 
 const handleDispatchToProps = dispatch => ({
-  insertToDo: task => dispatch(createTodo(task))
+  insertTodo: task => dispatch(createTodo(task))
 });
 
 export default connect(handleStateToProps, handleDispatchToProps)(Insert);

@@ -2,11 +2,14 @@ const initState = Object.assign({}, JSON.parse(localStorage.getItem('todos')));
 
 const todos = (state = initState, action) => {
   switch (action.type) {
-    case 'CREATE_TODO':
+    case 'CREATE_TODO': {
+      const { hash, task, complete } = action.payload;
       return {
         ...state,
-        [action.payload.hash]: { task: action.payload.task, complete: false }
+        [hash]: { task, complete }
       };
+    }
+
     case 'COMPLETE_TODO': {
       const todo = Object.assign({}, state[action.payload]);
       todo.complete = !todo.complete;
@@ -18,6 +21,10 @@ const todos = (state = initState, action) => {
       delete newState[[action.payload]];
       return newState;
     }
+
+    case 'CLEAR_TODOS':
+      return {};
+
     default:
       return state;
   }

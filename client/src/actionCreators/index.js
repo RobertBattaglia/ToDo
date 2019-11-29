@@ -14,6 +14,10 @@ export const deleteTodo = task => ({
   payload: task
 });
 
+export const clearTodos = () => ({
+  type: 'CLEAR_TODOS'
+});
+
 // USER
 export const loginUser = user => ({
   type: 'LOGIN_USER',

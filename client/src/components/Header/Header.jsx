@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import FacebookLogin from 'react-facebook-login';
+import sha256 from 'crypto-js/sha256';
+import axios from 'axios';
 import styles from './Header.css';
 
-import { loginUser } from '../../actionCreators';
+import { loginUser, clearTodos, createTodo } from '../../actionCreators';
+import { changeLocalStorage } from '../../helpers';
 
-const Header = ({ user, login }) => {
+const Header = ({ user, login, clearAllTodos, insertTodo }) => {
+  const getTodosForUser = async () => {
+    const {
+      data: { todos }
+    } = await axios.get(`/todo/${user.id}`);
+    todos.forEach(todo => {
+      const { task, complete } = todo;
+      const hash = sha256(task);
+      changeLocalStorage(todo => (todo[hash] = { task, complete }));
+      insertTodo({ hash, task });
+    });
+  };
+
   const responseFacebook = res => {
+    clearAllTodos();
+    localStorage.clear();
     login(res);
   };
+
+  useEffect(() => {
+    if (user.name) {
+      getTodosForUser();
+    }
+  }, [user]);
 
   return (
     <div id={styles.header}>
@@ -36,7 +59,9 @@ const mapStateToProps = ({ user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: user => dispatch(loginUser(user))
+  login: user => dispatch(loginUser(user)),
+  clearAllTodos: () => dispatch(clearTodos()),
+  insertTodo: todo => dispatch(createTodo(todo))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
