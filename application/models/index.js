@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('user', userSchema);
 
-module.exports.save = async (id, name, email, todo) => {
+module.exports.saveTodo = async (id, name, email, todo) => {
   const user = await User.findOne({ _id: id });
   if (!user) {
     new User({
@@ -49,8 +49,8 @@ module.exports.save = async (id, name, email, todo) => {
   }
 };
 
-module.exports.find = () => {
-  return User.find();
+module.exports.getUserTodos = async userId => {
+  return await User.findOne({ _id: userId }).select('todos -_id');
 };
 
 module.exports.delete = () => {
