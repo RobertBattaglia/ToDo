@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import sha256 from 'crypto-js/sha256';
+import axios from 'axios';
 
 import { createTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
@@ -8,13 +9,27 @@ import { changeLocalStorage } from '../../helpers';
 const Insert = ({ insertToDo, user }) => {
   const [task, setTask] = useState('');
 
+  const submitToDatabase = async () => {
+    const { id, name, email } = user;
+    const todo = { id: sha256(task + id).toString(), task, complete: false };
+    const body = { id, name, email, todo };
+    try {
+      await axios.post('/todo', body);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleChange = e => {
     setTask(e.target.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    const hash = user.isLoggedIn ? sha256(task + user.id) : sha256(task);
+    if (user.isLoggedIn) {
+      submitToDatabase();
+    }
+    const hash = sha256(task);
     changeLocalStorage(todo => (todo[hash] = { task, complete: false }));
     insertToDo({ hash, task });
     setTask('');

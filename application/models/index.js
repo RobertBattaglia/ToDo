@@ -17,13 +17,13 @@ db.once('open', () => {
 
 // Schemas / Model
 const todoSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
+  id: { type: String, required: true },
   task: String,
   complete: Boolean
 });
 
 const userSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
+  id: { type: String, required: true },
   name: String,
   email: String,
   todos: [todoSchema]
@@ -33,35 +33,39 @@ const User = mongoose.model('user', userSchema);
 
 // Methods
 module.exports.saveTodo = async (id, name, email, todo) => {
-  const user = await User.findOne({ _id: id });
-  if (!user) {
-    new User({
-      _id: id,
-      name,
-      email,
-      todos: [todo]
-    }).save();
-  } else {
-    const todoExists = await user.todos.id(todo._id);
-    if (!todoExists) {
-      user.todos.push(todo);
-      user.save();
+  try {
+    const user = await User.findOne({ id });
+    if (!user) {
+      return await new User({
+        id,
+        name,
+        email,
+        todos: [todo]
+      }).save();
+    } else {
+      const todoExists = user.todos.some(obj => obj.id === todo.id);
+      if (!todoExists) {
+        user.todos.push(todo);
+        return await user.save();
+      }
     }
+  } catch (err) {
+    return err;
   }
 };
 
 module.exports.getUserTodos = async userId => {
-  return await User.findOne({ _id: userId }).select('todos -_id');
+  return await User.findOne({ id: userId }).select('todos -_id');
 };
 
 module.exports.deleteTodo = async (userId, todoId) => {
-  const user = await User.findOne({ _id: userId }).exec();
+  const user = await User.findOne({ id: userId }).exec();
   user.todos = user.todos.filter(todo => todo.id !== todoId);
   return user.save();
 };
 
 module.exports.completeTodo = async (userId, todoId) => {
-  const user = await User.findOne({ _id: userId }).exec();
+  const user = await User.findOne({ id: userId }).exec();
   user.todos.forEach(todo => {
     if (todo.id === todoId) {
       todo.complete = !todo.complete;
