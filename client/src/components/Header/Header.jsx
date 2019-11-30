@@ -39,8 +39,7 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
         <h2>{`${user.name}'s Todo List`}</h2>
       ) : (
         <>
-          <h2>My Todo List</h2>
-          <p>login to facebook to access list across devices!</p>
+          <h2>My ToDos</h2>
           <FacebookLogin
             appId="561942184373005"
             fields="name,email,picture"
