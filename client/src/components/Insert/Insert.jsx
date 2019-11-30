@@ -16,6 +16,7 @@ const Insert = ({ insertTodo, user, todos }) => {
     try {
       await axios.post('/todo', body);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   };

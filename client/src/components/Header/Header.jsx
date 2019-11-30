@@ -34,7 +34,7 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
   }, [user]);
 
   return (
-    <div id={styles.header}>
+    <header className={styles.header}>
       {user.name ? (
         <h2>{`${user.name}'s Todo List`}</h2>
       ) : (
@@ -50,7 +50,7 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
           />
         </>
       )}
-    </div>
+    </header>
   );
 };
 

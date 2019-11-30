@@ -1,3 +1,5 @@
-#header {
-  margin-bottom: 1rem;
+.header {
+  margin: 3rem;
+  min-height: 20vh;
+  text-align: center;
 }
