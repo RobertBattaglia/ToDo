@@ -1,7 +1,27 @@
 .header {
   margin: 1rem;
-  height: 15%;
+  height: 20%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+}
+
+.facebookLogin {
+  background-color: #4c69ba;
+  border-color: #4c69ba;
+  border-radius: none;
+  color: #fff;
+  padding: 1rem;
+  font-family: Helvetica, sans-serif;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+img {
+  height: 50px;
+  width: 50px;
+  margin: 0 auto;
+  border-radius: 3rem;
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import sha256 from 'crypto-js/sha256';
 import axios from 'axios';
+import styles from './Insert.css';
 
 import { createTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
@@ -42,8 +43,9 @@ const Insert = ({ insertTodo, user, todos }) => {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        className={styles.insert}
         type="text"
-        placeholder="Insert Todo Item ..."
+        placeholder="Add ToDo Item ..."
         value={task}
         onChange={handleChange}
       />

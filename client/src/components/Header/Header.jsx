@@ -30,13 +30,20 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
   useEffect(() => {
     if (user.name) {
       getTodosForUser();
+      document.title = user.name;
     }
   }, [user]);
 
   return (
     <header className={styles.header}>
       {user.name ? (
-        <h2>{`${user.name}'s Todo List`}</h2>
+        <>
+          <img
+            src={`${user.picture.data.url}`}
+            alt={`${user.names}'s Facebook Profile`}
+          />
+          <h2>{`${user.name}'s ToDos`}</h2>
+        </>
       ) : (
         <>
           <h2>My ToDos</h2>
@@ -44,8 +51,7 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
             appId="561942184373005"
             fields="name,email,picture"
             callback={responseFacebook}
-            cssClass="my-facebook-button-class"
-            icon="fa-facebook"
+            cssClass={styles.facebookLogin}
           />
         </>
       )}
