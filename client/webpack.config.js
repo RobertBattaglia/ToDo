@@ -16,7 +16,7 @@ const config = env => {
   return {
     entry: ['babel-polyfill', './src/index.js'],
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, '..', 'application', 'dist'),
       filename: 'bundle.js'
     },
     module: {

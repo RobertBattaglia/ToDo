@@ -5,7 +5,7 @@ const app = express();
 
 const todo = require('./routes/todo');
 
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'dist')));
+app.use(express.static(path.resolve(__dirname, 'dist')));
 app.use('/todo', todo);
 
 app.get('/privacy', (req, res) => {
