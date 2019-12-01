@@ -33,7 +33,6 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
       document.title = `ToDos - ${user.name}`;
     }
   }, [user]);
-
   return (
     <header className={styles.header}>
       {user.name ? (
@@ -48,7 +47,8 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
         <>
           <h2>My ToDos</h2>
           <FacebookLogin
-            appId="561942184373005"
+            // eslint-disable-next-line no-undef
+            appId={process.env.FB_APP_ID}
             fields="name,email,picture"
             callback={responseFacebook}
             cssClass={styles.facebookLogin}
