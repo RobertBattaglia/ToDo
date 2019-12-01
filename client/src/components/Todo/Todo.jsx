@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './Todo.css';
 
 import Checkbox from 'react-simple-checkbox';
+import { FaRegTrashAlt } from 'react-icons/fa';
 
 import { deleteTodo, completeTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
@@ -40,7 +41,7 @@ const Todo = ({ hash, task, complete, user, removeToDo, finishToDo }) => {
     <div className={styles.todo}>
       <Checkbox size={1} checked={complete} onChange={handleChange} />
       <p className={`${complete ? styles.complete : ''}`}>{task}</p>
-      <button onClick={handleClick}>X</button>
+      <FaRegTrashAlt size={13} className={styles.trash} onClick={handleClick} />
     </div>
   );
 };

@@ -7,3 +7,11 @@
 .complete {
   text-decoration: line-through;
 }
+
+.trash {
+  cursor: pointer;
+}
+
+.trash:hover {
+  color: #ff4136;
+}
