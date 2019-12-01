@@ -28,6 +28,10 @@ const Insert = ({ insertTodo, user, todos }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (Object.keys(todos).length === 8 || task === '') {
+      return;
+    }
     const hash = sha256(task).toString();
     if (!(hash in todos)) {
       if (user.isLoggedIn) {
@@ -42,13 +46,18 @@ const Insert = ({ insertTodo, user, todos }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        className={styles.insert}
-        type="text"
-        placeholder="Add ToDo Item ..."
-        value={task}
-        onChange={handleChange}
-      />
+      {Object.keys(todos).length === 8 ? (
+        <p>Too much ToDo!</p>
+      ) : (
+        <input
+          className={styles.insert}
+          type="text"
+          placeholder="Add ToDo Item ..."
+          value={task}
+          onChange={handleChange}
+          maxLength="24"
+        />
+      )}
     </form>
   );
 };

@@ -8,8 +8,7 @@
 
 .facebookLogin {
   background-color: #4c69ba;
-  border-color: #4c69ba;
-  border-radius: none;
+  border: none;
   color: #fff;
   padding: 1rem;
   font-family: Helvetica, sans-serif;

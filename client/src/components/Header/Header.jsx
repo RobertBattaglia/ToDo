@@ -30,7 +30,7 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
   useEffect(() => {
     if (user.name) {
       getTodosForUser();
-      document.title = user.name;
+      document.title = `ToDos - ${user.name}`;
     }
   }, [user]);
 
