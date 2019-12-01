@@ -19,6 +19,7 @@
     "react-dom": "^16.10.2",
     "react-facebook-login": "^4.1.1",
     "react-redux": "^7.1.3",
+    "react-simple-checkbox": "^1.3.0",
     "redux": "^4.0.4"
   },
   "devDependencies": {

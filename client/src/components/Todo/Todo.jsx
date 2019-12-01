@@ -4,6 +4,8 @@ import sha256 from 'crypto-js/sha256';
 import axios from 'axios';
 import styles from './Todo.css';
 
+import Checkbox from 'react-simple-checkbox';
+
 import { deleteTodo, completeTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
 
@@ -36,11 +38,7 @@ const Todo = ({ hash, task, complete, user, removeToDo, finishToDo }) => {
 
   return (
     <div className={styles.todo}>
-      <input
-        type="checkbox"
-        defaultChecked={complete}
-        onChange={handleChange}
-      />
+      <Checkbox size={1} checked={complete} onChange={handleChange} />
       <p className={`${complete ? styles.complete : ''}`}>{task}</p>
       <button onClick={handleClick}>X</button>
     </div>
