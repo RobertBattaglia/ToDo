@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styles from './List.css';
 
 import Todo from '../Todo/Todo';
 
 const List = ({ todos }) => {
   return (
-    <div>
+    <div className={styles.list}>
       {Object.keys(todos).map(key => (
         <Todo
           hash={key}

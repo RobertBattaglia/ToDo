@@ -8,8 +8,17 @@ router.use(express.json());
 router.post('/', async (req, res) => {
   const { id, name, email, todo } = req.body;
   try {
-    await db.saveTodo(id, name, email, todo);
-    res.sendStatus(201);
+    const dbRes = await db.saveTodo(id, name, email, todo);
+    // dbRes will be undefined if Todo already exists
+    if (dbRes) {
+      if (Error.prototype.isPrototypeOf(dbRes)) {
+        throw dbRes;
+      }
+      res.status(201);
+    } else {
+      res.status(204);
+    }
+    res.send();
   } catch (err) {
     console.error(err);
     res.sendStatus(500);

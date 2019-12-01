@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  min-height: 100vh;
+  color: #666;
+}
+
+h2 {
+  font-size: 3rem;
+  font-family: 'Karla', sans-serif;
+}
+
+p {
+  font-size: 2rem;
+  font-family: 'Karla', sans-serif;
+}
+
+.main {
+  height: 620px;
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+@media (max-width: 460px) {
+  h2 {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.5rem;
+  }
+  .main {
+    width: 300px;
+  }
+}

@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import sha256 from 'crypto-js/sha256';
+import axios from 'axios';
+import styles from './Insert.css';
 
 import { createTodo } from '../../actionCreators';
 import { changeLocalStorage } from '../../helpers';
 
-const Insert = ({ insertToDo, user }) => {
+const Insert = ({ insertTodo, user, todos }) => {
   const [task, setTask] = useState('');
+
+  const postTodo = async () => {
+    const { id, name, email } = user;
+    const todo = { id: sha256(task + id).toString(), task, complete: false };
+    const body = { id, name, email, todo };
+    try {
+      await axios.post('/todo', body);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
+  };
 
   const handleChange = e => {
     setTask(e.target.value);
@@ -14,30 +28,47 @@ const Insert = ({ insertToDo, user }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const hash = user.isLoggedIn ? sha256(task + user.id) : sha256(task);
-    changeLocalStorage(todo => (todo[hash] = { task, complete: false }));
-    insertToDo({ hash, task });
+
+    if (Object.keys(todos).length === 8 || task === '') {
+      return;
+    }
+    const hash = sha256(task).toString();
+    if (!(hash in todos)) {
+      if (user.isLoggedIn) {
+        postTodo();
+      }
+      changeLocalStorage(todo => (todo[hash] = { task, complete: false }));
+      insertTodo({ hash, task, complete: false });
+    }
+
     setTask('');
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Insert Todo Item ..."
-        value={task}
-        onChange={handleChange}
-      />
+      {Object.keys(todos).length === 8 ? (
+        <p>Too much ToDo!</p>
+      ) : (
+        <input
+          className={styles.insert}
+          type="text"
+          placeholder="Add ToDo Item ..."
+          value={task}
+          onChange={handleChange}
+          maxLength="24"
+        />
+      )}
     </form>
   );
 };
 
-const handleStateToProps = ({ user }) => ({
-  user
+const handleStateToProps = ({ user, todos }) => ({
+  user,
+  todos
 });
 
 const handleDispatchToProps = dispatch => ({
-  insertToDo: task => dispatch(createTodo(task))
+  insertTodo: task => dispatch(createTodo(task))
 });
 
 export default connect(handleStateToProps, handleDispatchToProps)(Insert);

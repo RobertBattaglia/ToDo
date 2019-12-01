@@ -1,9 +1,17 @@
 .todo {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .complete {
   text-decoration: line-through;
+}
+
+.trash {
+  cursor: pointer;
+}
+
+.trash:hover {
+  color: #ff4136;
 }
