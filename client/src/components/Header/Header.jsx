@@ -52,6 +52,11 @@ const Header = ({ user, login, clearAllTodos, insertTodo }) => {
             fields="name,email,picture"
             callback={responseFacebook}
             cssClass={styles.facebookLogin}
+            cookie={true}
+            xfbml={true}
+            version={'3.2'}
+            autoLoad={false}
+            isMobile={true}
           />
         </>
       )}
